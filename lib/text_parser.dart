@@ -166,11 +166,13 @@ class TextParser extends StatelessWidget {
                     textSpan.recognizer))) {
       return _optimizeTextspan(textSpan.children!.first);
     }
+
+    final textSpanChildren = List<InlineSpan>.from(textSpan.children ?? []);
+
     // if our child node is just blank, then append its child nodes one up
     // so, we flatten the tree
     {
-      final textSpanChildren = textSpan.children;
-      if (textSpanChildren != null) {
+      if (textSpanChildren.isNotEmpty) {
         final optimizedChildren = <InlineSpan>[];
         for (var child in textSpanChildren) {
           child = _optimizeTextspan(child);
@@ -185,14 +187,13 @@ class TextParser extends StatelessWidget {
             optimizedChildren.add(child);
           }
         }
-        textSpan.children!.clear();
-        textSpan.children!.addAll(optimizedChildren);
+        textSpanChildren.clear();
+        textSpanChildren.addAll(optimizedChildren);
       }
     }
     // now we try to merge children together
     {
-      final textSpanChildren = textSpan.children;
-      if (textSpanChildren != null) {
+      if (textSpanChildren.isNotEmpty) {
         final optimizedChildren = <InlineSpan>[];
         for (final child in textSpanChildren) {
           final lastChild =
@@ -217,12 +218,23 @@ class TextParser extends StatelessWidget {
             optimizedChildren.add(child);
           }
         }
-        textSpan.children!.clear();
-        textSpan.children!.addAll(optimizedChildren);
+        textSpanChildren.clear();
+        textSpanChildren.addAll(optimizedChildren);
       }
     }
     // we don't care much about additional optimization for now
-    return textSpan;
+    return TextSpan(
+      text: textSpan.text,
+      children: textSpanChildren,
+      style: textSpan.style,
+      recognizer: textSpan.recognizer,
+      mouseCursor: textSpan.mouseCursor,
+      onEnter: textSpan.onEnter,
+      onExit: textSpan.onExit,
+      semanticsLabel: textSpan.semanticsLabel,
+      locale: textSpan.locale,
+      spellOut: textSpan.spellOut,
+    );
   }
 
   InlineSpan _parseInlineChildNodes(
