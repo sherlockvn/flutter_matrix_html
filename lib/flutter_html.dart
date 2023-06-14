@@ -31,6 +31,7 @@ class Html extends StatelessWidget {
     this.emoteSize,
     this.getCodeLanguage,
     this.setCodeLanguage,
+    this.inlineSpanEnd,
   }) : super(key: key);
 
   final String data;
@@ -56,6 +57,8 @@ class Html extends StatelessWidget {
   /// Setting and getting code langauge cache
   final SetCodeLanguage? setCodeLanguage;
   final GetCodeLanguage? getCodeLanguage;
+
+  final InlineSpan? inlineSpanEnd;
 
   @override
   Widget build(BuildContext context) {
@@ -85,6 +88,7 @@ class Html extends StatelessWidget {
           defaultTextStyle: defaultTextStyle,
           setCodeLanguage: setCodeLanguage,
           getCodeLanguage: getCodeLanguage,
+          inlineSpanEnd: inlineSpanEnd,
         ),
       ),
     );
