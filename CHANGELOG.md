@@ -1,3 +1,6 @@
+## [1.2.0] - 14th Jun 2023:
+- Add support for the `inlineSpanEnd` parameter
+
 ## [1.1.0] - 8th Nov 2021:
 - Add support for `<ruby>`, `<rp>` and `<rt>` tags
 - Fix the `<summary>` of the `<details>` tag overflowing
